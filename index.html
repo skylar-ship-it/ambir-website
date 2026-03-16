@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AMBIR — Precision in Every Detail</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ========== RESET & BASE ========== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.625;
+  color: #0B0F1A;
+  background: #FEFCF9;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; transition: color 0.25s ease; }
+img { max-width: 100%; display: block; }
+button { cursor: pointer; font-family: inherit; border: none; }
+
+/* ========== BRAND TOKENS ========== */
+:root {
+  --obsidian:  #0B0F1A;
+  --slate:     #1E2A3A;
+  --ivory:     #F8F6F1;
+  --gold:      #D4AF37;
+  --sage:      #7C9A8E;
+  --blush:     #D4A89A;
+  --graphite:  #4A5568;
+  --platinum:  #C4C8CE;
+  --warm-white:#FEFCF9;
+  --deep-teal: #1A3A3A;
+  --sage-dark: #6a887c;
+}
+
+/* ========== UTILITY ========== */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.section-pad { padding: 96px 0; }
+.section-pad-sm { padding: 64px 0; }
+.gold-rule { width: 48px; height: 2px; background: var(--gold); border: none; margin: 16px 0 0; }
+.fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ========== NAV ========== */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--obsidian);
+  border-bottom: 1px solid rgba(212,175,55,0.15);
+  backdrop-filter: blur(12px);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 72px;
+}
+.nav-logo {
+  font-weight: 300; font-size: 20px; letter-spacing: 0.35em; color: #fff;
+  display: flex; align-items: center; gap: 14px;
+}
+.nav-logo .monogram {
+  width: 32px; height: 32px;
+}
+.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-links a {
+  font-size: 14px; font-weight: 400; color: var(--platinum); letter-spacing: 0.02em;
+  position: relative; padding: 4px 0;
+}
+.nav-links a::after {
+  content: ''; position: absolute; left: 0; bottom: -2px;
+  width: 0; height: 1px; background: var(--gold); transition: width 0.3s ease;
+}
+.nav-links a:hover { color: #fff; }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta {
+  background: var(--sage); color: #fff;
+  padding: 14px 48px !important;
+  min-width: 180px; text-align: center;
+  border-radius: 6px; font-size: 13px; font-weight: 600;
+  transition: background 0.25s ease; white-space: nowrap;
+  box-sizing: border-box; display: inline-block;
+}
+.nav-cta:hover { background: var(--sage-dark); }
+.nav-cta::after { display: none !important; }
+
+/* Mobile nav toggle */
+.nav-toggle { display: none; background: none; border: none; padding: 8px; }
+.nav-toggle span {
+  display: block; width: 22px; height: 2px; background: #fff;
+  margin: 5px 0; transition: 0.3s;
+}
+
+/* ========== HERO ========== */
+.hero {
+  margin-top: 72px;
+  min-height: 85vh;
+  background: linear-gradient(165deg, var(--obsidian) 0%, var(--slate) 60%, var(--deep-teal) 100%);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  width: 100%;
+}
+
+/* --- Floating triangles canvas --- */
+.hero-triangles {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+}
+.hero-tri {
+  position: absolute; opacity: 0;
+  animation: triFloat linear infinite;
+}
+.hero-tri:nth-child(1)  { left: 5%;  top: 10%;  animation-duration: 18s; animation-delay: 0s;   }
+.hero-tri:nth-child(2)  { left: 15%; top: 60%;  animation-duration: 22s; animation-delay: 2s;   }
+.hero-tri:nth-child(3)  { left: 30%; top: 25%;  animation-duration: 20s; animation-delay: 4s;   }
+.hero-tri:nth-child(4)  { left: 50%; top: 70%;  animation-duration: 24s; animation-delay: 1s;   }
+.hero-tri:nth-child(5)  { left: 65%; top: 15%;  animation-duration: 19s; animation-delay: 3s;   }
+.hero-tri:nth-child(6)  { left: 80%; top: 50%;  animation-duration: 21s; animation-delay: 5s;   }
+.hero-tri:nth-child(7)  { left: 90%; top: 30%;  animation-duration: 23s; animation-delay: 0.5s; }
+.hero-tri:nth-child(8)  { left: 40%; top: 80%;  animation-duration: 17s; animation-delay: 6s;   }
+.hero-tri:nth-child(9)  { left: 72%; top: 75%;  animation-duration: 25s; animation-delay: 2.5s; }
+.hero-tri:nth-child(10) { left: 20%; top: 45%;  animation-duration: 20s; animation-delay: 7s;   }
+.hero-tri:nth-child(11) { left: 55%; top: 5%;   animation-duration: 26s; animation-delay: 1.5s; }
+.hero-tri:nth-child(12) { left: 85%; top: 85%;  animation-duration: 19s; animation-delay: 4.5s; }
+
+@keyframes triFloat {
+  0%   { opacity: 0; transform: translateY(40px) rotate(0deg) scale(0.7); }
+  10%  { opacity: 0.07; }
+  50%  { opacity: 0.12; transform: translateY(-60px) rotate(90deg) scale(1); }
+  90%  { opacity: 0.05; }
+  100% { opacity: 0; transform: translateY(-120px) rotate(180deg) scale(0.8); }
+}
+
+/* --- Cinematic light sweep --- */
+.hero-sweep {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden;
+}
+.hero-sweep::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -80%;
+  width: 60%; height: 200%;
+  background: linear-gradient(105deg, transparent 40%, rgba(212,175,55,0.04) 50%, rgba(212,175,55,0.08) 52%, rgba(255,255,255,0.03) 54%, transparent 60%);
+  animation: lightSweep 8s ease-in-out infinite;
+  transform: skewX(-20deg);
+}
+@keyframes lightSweep {
+  0%   { left: -80%; }
+  40%  { left: 140%; }
+  100% { left: 140%; }
+}
+
+/* --- Horizontal scan line --- */
+.hero-scanline {
+  position: absolute; left: 0; right: 0; height: 1px; z-index: 1;
+  background: linear-gradient(90deg, transparent, rgba(212,175,55,0.2) 20%, rgba(124,154,142,0.25) 50%, rgba(212,175,55,0.2) 80%, transparent);
+  animation: scanLine 6s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes scanLine {
+  0%   { top: 15%; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { top: 85%; opacity: 0; }
+}
+
+/* --- Product image (full background atmosphere) --- */
+.hero-product-img {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none; z-index: 0;
+  animation: productFloat 12s ease-in-out infinite alternate;
+}
+.hero-product-img img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  opacity: 0.18;
+}
+@keyframes productFloat {
+  0%   { transform: scale(1); }
+  100% { transform: scale(1.04); }
+}
+
+/* --- Vignette overlay --- */
+.hero-vignette {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(11,15,26,0.5) 100%);
+}
+
+/* --- Dark overlay to separate content from bg image --- */
+.hero-overlay {
+  position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background: rgba(11,15,26,0.55);
+}
+
+/* --- Hero content --- */
+.hero-content {
+  position: relative; z-index: 3; text-align: center;
+  width: 100%; max-width: 720px; padding: 0 24px;
+  margin: 0 auto;
+}
+
+/* --- Monogram draw-in animation --- */
+.hero-monogram {
+  width: 80px; height: 80px; margin: 0 auto 32px;
+}
+.hero-monogram path {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: drawMonogram 2.5s ease forwards 0.3s;
+}
+.hero-monogram line {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: drawMonogram 1.2s ease forwards 1.8s;
+}
+@keyframes drawMonogram {
+  to { stroke-dashoffset: 0; }
+}
+
+/* --- Pulsing gold glow behind monogram --- */
+.hero-monogram-wrap {
+  position: relative; display: inline-block;
+}
+.hero-monogram-wrap::before {
+  content: '';
+  position: absolute; top: 50%; left: 50%;
+  width: 120px; height: 120px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: glowPulse 4s ease-in-out infinite;
+}
+@keyframes glowPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+  50%      { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+}
+.hero h1 {
+  font-size: clamp(36px, 5vw, 56px); font-weight: 300; color: #fff;
+  letter-spacing: -0.01em; line-height: 1.15; margin-bottom: 8px;
+  opacity: 0; transform: translateY(20px);
+  animation: heroFadeUp 1s ease forwards 1.2s;
+}
+.hero h1 strong { font-weight: 700; }
+.hero-rule {
+  width: 64px; height: 2px; background: var(--gold); border: none; margin: 24px auto;
+  opacity: 0; transform: scaleX(0);
+  animation: heroRuleGrow 0.8s ease forwards 1.8s;
+}
+.hero p {
+  font-size: 18px; color: var(--platinum); line-height: 1.7;
+  max-width: 540px; margin: 0 auto 40px;
+  opacity: 0; transform: translateY(16px);
+  animation: heroFadeUp 1s ease forwards 2.2s;
+}
+.hero-cta {
+  display: inline-block; background: var(--sage); color: #fff;
+  padding: 16px 40px; border-radius: 6px; font-size: 15px;
+  font-weight: 600; letter-spacing: 0.03em;
+  transition: background 0.25s ease, transform 0.2s ease;
+  opacity: 0; transform: translateY(16px);
+  animation: heroFadeUp 1s ease forwards 2.6s;
+}
+.hero-cta:hover { background: var(--sage-dark); transform: translateY(-2px); }
+
+@keyframes heroFadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroRuleGrow {
+  to { opacity: 1; transform: scaleX(1); }
+}
+
+/* ========== STAT BANNER ========== */
+.stat-banner {
+  background: var(--ivory);
+  border-top: 1px solid rgba(212,175,55,0.2);
+  border-bottom: 1px solid rgba(212,175,55,0.2);
+}
+.stat-inner {
+  display: flex; align-items: center; justify-content: center;
+  gap: 48px; flex-wrap: wrap; padding: 48px 24px; max-width: 1000px; margin: 0 auto;
+}
+.stat-item { text-align: center; }
+.stat-number {
+  font-size: 48px; font-weight: 700; color: var(--obsidian);
+  line-height: 1.1;
+}
+.stat-number span { color: var(--gold); }
+.stat-label { font-size: 14px; color: var(--graphite); margin-top: 8px; letter-spacing: 0.02em; }
+.stat-divider { width: 1px; height: 64px; background: var(--gold); opacity: 0.3; }
+
+/* ========== PRODUCTS GRID ========== */
+.products { background: var(--warm-white); }
+.section-header { margin-bottom: 56px; }
+.section-header .overline {
+  font-size: 13px; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--sage); margin-bottom: 12px;
+}
+.section-header h2 {
+  font-size: clamp(28px, 3.5vw, 40px); font-weight: 700; color: var(--obsidian);
+  line-height: 1.2;
+}
+.products-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.product-card {
+  background: #fff; border-radius: 8px; overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(11,15,26,0.08);
+}
+.product-img {
+  height: 240px; background: var(--ivory);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden; padding: 24px;
+}
+.product-img img {
+  max-height: 100%; max-width: 100%; object-fit: contain;
+  transition: transform 0.4s ease;
+}
+.product-card:hover .product-img img { transform: scale(1.05); }
+.product-img .icon-placeholder {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--sage), var(--deep-teal));
+  display: flex; align-items: center; justify-content: center;
+}
+.product-img .icon-placeholder svg { width: 36px; height: 36px; }
+.product-body { padding: 24px; }
+.product-body h3 {
+  font-size: 17px; font-weight: 600; margin-bottom: 8px; color: var(--obsidian);
+}
+.product-body p {
+  font-size: 14px; color: var(--graphite); line-height: 1.6; margin-bottom: 16px;
+}
+.product-link {
+  font-size: 13px; font-weight: 600; color: var(--sage);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: gap 0.2s ease;
+}
+.product-link:hover { gap: 10px; color: var(--sage-dark); }
+
+/* ========== INDUSTRY SOLUTIONS ========== */
+.industry { background: var(--obsidian); color: #fff; }
+.industry-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+}
+.industry-card {
+  border-radius: 8px; overflow: hidden; position: relative;
+  min-height: 400px; display: flex; align-items: flex-end;
+  padding: 40px; background-size: cover; background-position: center;
+}
+.industry-card::before {
+  content: ''; position: absolute; inset: 0;
+  border-radius: 8px;
+}
+.industry-card:nth-child(1)::before {
+  background: linear-gradient(180deg, rgba(26,58,58,0.3) 0%, rgba(26,58,58,0.85) 70%, var(--deep-teal) 100%);
+}
+.industry-card:nth-child(2)::before {
+  background: linear-gradient(180deg, rgba(30,42,58,0.3) 0%, rgba(30,42,58,0.85) 70%, var(--slate) 100%);
+}
+.industry-card:nth-child(1) {
+  background: url('https://ambir.com/wp-content/uploads/2025/03/medical-banner.jpg') center/cover no-repeat;
+}
+.industry-card:nth-child(2) {
+  background: url('https://ambir.com/wp-content/uploads/2025/04/Legal_rectangle.jpg') center/cover no-repeat;
+}
+.industry-content { position: relative; z-index: 2; }
+.industry-content .overline {
+  font-size: 12px; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
+}
+.industry-content h3 {
+  font-size: 28px; font-weight: 700; margin-bottom: 12px; line-height: 1.2;
+}
+.industry-content p {
+  font-size: 15px; color: var(--platinum); line-height: 1.6; margin-bottom: 24px; max-width: 380px;
+}
+.industry-btn {
+  display: inline-block; background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25); color: #fff;
+  padding: 12px 28px; border-radius: 6px; font-size: 14px; font-weight: 600;
+  transition: background 0.25s ease;
+}
+.industry-btn:hover { background: rgba(255,255,255,0.2); }
+
+/* ========== TRUST SECTION ========== */
+.trust { background: var(--ivory); }
+.trust-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+}
+.trust-item { text-align: center; padding: 32px 16px; }
+.trust-icon {
+  width: 56px; height: 56px; margin: 0 auto 20px;
+  background: var(--obsidian); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.trust-icon svg { width: 24px; height: 24px; }
+.trust-item h4 { font-size: 16px; font-weight: 600; margin-bottom: 8px; color: var(--obsidian); }
+.trust-item p { font-size: 14px; color: var(--graphite); line-height: 1.6; }
+
+/* ========== BLOG / INSIGHTS ========== */
+.insights { background: var(--warm-white); }
+.insights-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+}
+.insight-card {
+  background: #fff; border-radius: 8px; overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.insight-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(11,15,26,0.06);
+}
+.insight-img-real {
+  height: 220px; position: relative; overflow: hidden; background: var(--ivory);
+}
+.insight-img-real img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.insight-card:hover .insight-img-real img { transform: scale(1.04); }
+.insight-badge {
+  position: absolute; top: 16px; right: 16px;
+  background: var(--gold); color: #fff;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 20px;
+}
+.insight-badge--sage { background: var(--sage); }
+.insight-body { padding: 24px; display: flex; flex-direction: column; }
+.insight-body h3 {
+  font-size: 17px; font-weight: 600; line-height: 1.35;
+  color: var(--obsidian); margin-bottom: 10px;
+}
+.insight-body p { font-size: 14px; color: var(--graphite); line-height: 1.6; margin-bottom: 16px; }
+.insight-body .product-link { margin-top: auto; }
+.insight-date {
+  font-size: 12px; color: var(--platinum); margin-top: 16px;
+  padding-top: 16px; border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+/* ========== NEWSLETTER CTA ========== */
+.newsletter {
+  background: linear-gradient(135deg, var(--obsidian) 0%, var(--slate) 100%);
+  position: relative; overflow: hidden;
+}
+.newsletter::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M100 20 L160 160 H40 Z' fill='none' stroke='%23D4AF37' stroke-width='0.5' opacity='0.05'/%3E%3C/svg%3E") repeat;
+}
+.newsletter-inner {
+  position: relative; z-index: 2;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 48px; flex-wrap: wrap;
+}
+.newsletter-text h2 {
+  font-size: 32px; font-weight: 700; color: #fff; margin-bottom: 8px;
+}
+.newsletter-text p { font-size: 16px; color: var(--platinum); }
+.newsletter-form { display: flex; gap: 12px; flex-wrap: wrap; }
+.newsletter-form input {
+  padding: 14px 20px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.08); color: #fff; font-size: 15px;
+  width: 300px; font-family: 'Inter', sans-serif;
+  transition: border-color 0.25s ease;
+}
+.newsletter-form input::placeholder { color: rgba(255,255,255,0.4); }
+.newsletter-form input:focus {
+  outline: none; border-color: var(--gold);
+  background: rgba(255,255,255,0.12);
+}
+.newsletter-form button {
+  padding: 14px 32px; border-radius: 6px;
+  background: var(--sage); color: #fff; font-size: 15px; font-weight: 600;
+  transition: background 0.25s ease;
+}
+.newsletter-form button:hover { background: var(--sage-dark); }
+
+/* ========== FOOTER ========== */
+.footer {
+  background: var(--obsidian);
+  border-top: 1px solid rgba(212,175,55,0.15);
+}
+.footer-top {
+  display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 48px; padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.footer-brand .footer-logo {
+  font-weight: 300; font-size: 18px; letter-spacing: 0.35em;
+  color: #fff; margin-bottom: 16px; display: flex; align-items: center; gap: 12px;
+}
+.footer-brand p { font-size: 14px; color: var(--graphite); line-height: 1.7; max-width: 280px; }
+.footer-badges { display: flex; gap: 16px; margin-top: 24px; }
+.badge {
+  padding: 8px 16px; border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px; font-size: 11px; color: var(--platinum);
+  letter-spacing: 0.04em; display: flex; align-items: center; gap: 6px;
+}
+.badge svg { width: 14px; height: 14px; }
+.footer-col h4 {
+  font-size: 13px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 20px;
+}
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 12px; }
+.footer-col a {
+  font-size: 14px; color: var(--graphite);
+  transition: color 0.2s ease;
+}
+.footer-col a:hover { color: #fff; }
+.footer-bottom {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 32px; flex-wrap: wrap; gap: 16px;
+}
+.footer-copy { font-size: 13px; color: var(--graphite); }
+.footer-socials { display: flex; gap: 16px; }
+.footer-socials a {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+.footer-socials a:hover {
+  border-color: var(--gold);
+  background: rgba(212,175,55,0.1);
+}
+.footer-socials svg { width: 16px; height: 16px; fill: var(--platinum); }
+.footer-legal { display: flex; gap: 24px; }
+.footer-legal a { font-size: 13px; color: var(--graphite); }
+.footer-legal a:hover { color: #fff; }
+
+/* ========== TRUSTED-BY LOGO BAR ========== */
+.logo-bar {
+  background: var(--warm-white); border-bottom: 1px solid rgba(0,0,0,0.04);
+  overflow: hidden; position: relative; padding: 20px 0;
+}
+.logo-bar::before, .logo-bar::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2;
+  pointer-events: none;
+}
+.logo-bar::before { left: 0; background: linear-gradient(90deg, var(--warm-white), transparent); }
+.logo-bar::after { right: 0; background: linear-gradient(270deg, var(--warm-white), transparent); }
+.logo-bar-label {
+  text-align: center; padding: 0 0 12px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--platinum);
+}
+.logo-bar-track {
+  display: flex; width: max-content;
+  animation: marquee 25s linear infinite;
+}
+.logo-bar-track:hover { animation-play-state: paused; }
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.logo-bar-track span {
+  font-size: 17px; font-weight: 700; color: var(--blush); letter-spacing: 0.04em;
+  white-space: nowrap; padding: 0 32px;
+  display: inline-flex; align-items: center; gap: 24px;
+}
+.logo-bar-track span::after {
+  content: ''; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--gold); opacity: 0.4; flex-shrink: 0;
+}
+
+/* ========== TESTIMONIALS ========== */
+.testimonials { background: var(--obsidian); position: relative; overflow: hidden; }
+.testimonials::before {
+  content: ''; position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M100 20 L160 160 H40 Z' fill='none' stroke='%23D4AF37' stroke-width='0.5' opacity='0.04'/%3E%3C/svg%3E") repeat;
+}
+.testimonials-inner { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; text-align: center; }
+.testimonial-slide { display: none; }
+.testimonial-slide.active { display: block; animation: testiFade 0.6s ease; }
+@keyframes testiFade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.testimonial-quote {
+  font-size: clamp(20px, 2.5vw, 28px); font-weight: 300; color: #fff;
+  line-height: 1.6; margin-bottom: 32px; font-style: italic;
+}
+.testimonial-quote::before { content: '\201C'; color: var(--gold); font-size: 48px; line-height: 0; vertical-align: -12px; margin-right: 4px; }
+.testimonial-author { display: flex; align-items: center; justify-content: center; gap: 16px; }
+.testimonial-avatar {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--sage); display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 600; color: #fff;
+}
+.testimonial-info h4 { font-size: 15px; font-weight: 600; color: #fff; }
+.testimonial-info p { font-size: 13px; color: var(--graphite); }
+.testimonial-dots { display: flex; gap: 10px; justify-content: center; margin-top: 32px; }
+.testimonial-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  border: 1.5px solid var(--gold); background: transparent;
+  transition: background 0.3s ease; padding: 0;
+}
+.testimonial-dot.active { background: var(--gold); }
+.testimonial-stars { margin-bottom: 20px; }
+.testimonial-stars svg { display: inline-block; }
+
+/* ========== STICKY CTA ========== */
+.sticky-cta {
+  position: fixed; bottom: 24px; right: 24px; z-index: 90;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+}
+.sticky-cta.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.sticky-cta-btn {
+  background: var(--sage); color: #fff;
+  padding: 14px 28px; border-radius: 8px;
+  font-size: 14px; font-weight: 600; letter-spacing: 0.02em;
+  box-shadow: 0 8px 32px rgba(11,15,26,0.25);
+  display: flex; align-items: center; gap: 10px;
+  transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+  text-decoration: none;
+}
+.sticky-cta-btn:hover {
+  background: var(--sage-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(11,15,26,0.35);
+}
+.sticky-cta-btn svg { width: 18px; height: 18px; }
+.sticky-cta-phone {
+  background: var(--obsidian); color: var(--platinum);
+  padding: 10px 20px; border-radius: 8px;
+  font-size: 13px; font-weight: 500;
+  box-shadow: 0 4px 16px rgba(11,15,26,0.2);
+  display: flex; align-items: center; gap: 8px;
+  transition: color 0.2s ease, background 0.2s ease;
+  text-decoration: none;
+}
+.sticky-cta-phone:hover { color: #fff; background: var(--slate); }
+.sticky-cta-phone svg { width: 14px; height: 14px; }
+
+/* ========== CTA BANNER (above footer) ========== */
+.cta-banner {
+  background: linear-gradient(135deg, var(--sage) 0%, var(--deep-teal) 100%);
+  text-align: center; position: relative; overflow: hidden;
+}
+.cta-banner::before {
+  content: ''; position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M100 20 L160 160 H40 Z' fill='none' stroke='%23fff' stroke-width='0.5' opacity='0.06'/%3E%3C/svg%3E") repeat;
+}
+.cta-banner-inner { position: relative; z-index: 2; }
+.cta-banner h2 { font-size: clamp(28px, 3.5vw, 40px); font-weight: 700; color: #fff; margin-bottom: 12px; }
+.cta-banner p { font-size: 17px; color: rgba(255,255,255,0.8); margin-bottom: 32px; max-width: 540px; margin-left: auto; margin-right: auto; }
+.cta-banner-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.cta-btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #fff; color: var(--obsidian);
+  padding: 16px 36px; border-radius: 6px; font-size: 15px; font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.25s ease;
+}
+.cta-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
+.cta-btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  padding: 16px 36px; border-radius: 6px; font-size: 15px; font-weight: 600;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+.cta-btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.7); }
+
+/* ========== CUSTOM CURSOR ========== */
+@media (pointer: fine) {
+  * { cursor: none !important; }
+}
+.cursor-tri {
+  position: fixed; top: 0; left: 0; z-index: 9999;
+  width: 20px; height: 20px;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s ease, filter 0.25s ease;
+  filter: drop-shadow(0 0 4px rgba(212,175,55,0.4));
+}
+.cursor-tri svg { width: 100%; height: 100%; }
+.cursor-ring {
+  position: fixed; top: 0; left: 0; z-index: 9998;
+  width: 44px; height: 44px;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s ease, height 0.25s ease, opacity 0.25s ease, filter 0.25s ease;
+  filter: drop-shadow(0 0 6px rgba(212,175,55,0.2));
+}
+.cursor-ring svg { width: 100%; height: 100%; }
+.cursor-tri.hovering {
+  width: 26px; height: 26px;
+  filter: drop-shadow(0 0 10px rgba(124,154,142,0.6));
+}
+.cursor-tri.hovering svg path { stroke: var(--sage); }
+.cursor-ring.hovering {
+  width: 64px; height: 64px;
+  filter: drop-shadow(0 0 12px rgba(124,154,142,0.3));
+}
+.cursor-ring.hovering svg path { stroke: rgba(124,154,142,0.4); }
+.cursor-tri.clicking { transform: translate(-50%, -50%) scale(0.7) rotate(15deg); }
+.cursor-ring.clicking { width: 32px; height: 32px; }
+
+/* ========== TILT CARDS ========== */
+.product-card, .insight-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.product-body, .insight-body { transform: translateZ(20px); }
+.product-card .product-img img { transform: translateZ(10px); }
+
+/* ========== MAGNETIC BUTTONS ========== */
+.hero-cta, .industry-btn, .nav-cta, .newsletter-form button {
+  transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+}
+.hero-cta:hover, .industry-btn:hover, .newsletter-form button:hover {
+  box-shadow: 0 8px 30px rgba(124,154,142,0.3);
+}
+
+/* ========== PARALLAX SECTIONS ========== */
+.parallax-bg {
+  transition: transform 0.1s linear;
+  will-change: transform;
+}
+
+/* ========== ANIMATED STAT NUMBERS ========== */
+.stat-number { display: inline-flex; }
+
+/* ========== GOLD SHIMMER on section headers ========== */
+.section-header h2 {
+  background: linear-gradient(90deg, var(--obsidian) 40%, var(--gold) 50%, var(--obsidian) 60%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmer 6s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0%, 100% { background-position: 100% 0; }
+  50% { background-position: -100% 0; }
+}
+/* Override for dark bg sections */
+.industry .section-header h2 {
+  background: linear-gradient(90deg, #fff 40%, var(--gold) 50%, #fff 60%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 6s ease-in-out infinite;
+}
+.section-header h2 {
+  -webkit-text-fill-color: transparent;
+}
+
+/* ========== TRUST ICON HOVER ========== */
+.trust-icon {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.trust-item:hover .trust-icon {
+  transform: scale(1.15) rotate(5deg);
+  box-shadow: 0 8px 24px rgba(212,175,55,0.2);
+}
+
+/* ========== FLOATING BADGES in footer ========== */
+.badge { transition: transform 0.3s ease, border-color 0.3s ease; }
+.badge:hover {
+  transform: translateY(-3px);
+  border-color: var(--gold);
+}
+
+/* ========== SOCIAL ICON BOUNCE ========== */
+.footer-socials a {
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.3s ease;
+}
+.footer-socials a:hover {
+  transform: translateY(-4px) scale(1.1);
+}
+
+/* ========== NAV scroll shrink ========== */
+.nav.scrolled {
+  height: auto;
+  background: rgba(11,15,26,0.95);
+  backdrop-filter: blur(20px);
+}
+.nav.scrolled .nav-inner { height: 56px; }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 968px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: block; }
+  .nav-links.open {
+    display: flex; flex-direction: column;
+    position: absolute; top: 72px; left: 0; right: 0;
+    background: var(--obsidian); padding: 24px;
+    border-bottom: 1px solid rgba(212,175,55,0.15);
+    gap: 16px;
+  }
+  .industry-grid { grid-template-columns: 1fr; }
+  .trust-grid { grid-template-columns: 1fr 1fr; }
+  .insights-grid { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 968px) {
+  .products-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .stat-inner { flex-direction: column; gap: 32px; }
+  .stat-divider { width: 48px; height: 1px; }
+  .products-grid { grid-template-columns: 1fr; }
+  .trust-grid { grid-template-columns: 1fr; }
+  .newsletter-inner { flex-direction: column; text-align: center; }
+  .newsletter-form { width: 100%; }
+  .newsletter-form input { width: 100%; }
+  .footer-top { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== NAVIGATION ========== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <svg class="monogram" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M30 8 L52 48 H8 Z" stroke="#D4AF37" stroke-width="1.5" fill="none"/>
+        <line x1="18" y1="38" x2="42" y2="38" stroke="#D4AF37" stroke-width="1"/>
+      </svg>
+      AMBIR
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#products">Products</a>
+      <a href="#solutions">Solutions</a>
+      <a href="#insights">Insights</a>
+      <a href="#about">About</a>
+      <a href="#support">Support</a>
+      <a href="#" class="nav-cta">Shop AMBIR</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+
+  <!-- Layer 0: Floating triangles -->
+  <div class="hero-triangles">
+    <svg class="hero-tri" width="60" height="60" viewBox="0 0 60 60"><path d="M30 5 L55 50 H5 Z" stroke="#D4AF37" stroke-width="0.8" fill="none"/></svg>
+    <svg class="hero-tri" width="40" height="40" viewBox="0 0 60 60"><path d="M30 5 L55 50 H5 Z" stroke="#7C9A8E" stroke-width="0.8" fill="none"/></svg>
+    <svg class="hero-tri" width="80" height="80" viewBox="0 0 60 60"><path d="M30 5 L55 50 H5 Z" stroke="#D4AF37" stroke-width="0.5" fill="none"/></svg>
+    <svg class="hero-tri" width="50" height="50" viewBox="0 0 60 60"><path d="M30 5 L55 50 H5 Z" stroke="#C4C8CE" stroke-width="0.6" fill="none"/></svg>
+    <svg class="hero-tri" width="70" height="70" viewBox="0 0 60 60"><path d="M30 5 L55 50 H5 Z" stroke="#D4AF37" stroke-width="0.6" fill="none"/></svg>
+    <svg class="hero-tri" width="45" height="45" viewBox="0 0 60 60"><path d="M30 5 L55 50 H5 Z" stroke="#7C9A8E" stroke-width="0.7" fill="none"/></svg>
+    <svg class="hero-tri" width="55" height="55" viewBox="0 0 60 60"><path d="M30 5 L55 50 H5 Z" stroke="#D4AF37" stroke-width="0.5" fill="none"/></svg>
+    <svg class="hero-tri" width="90" height="90" viewBox="0 0 60 60"><path d="M30 5 L55 50 H5 Z" stroke="#C4C8CE" stroke-width="0.4" fill="none"/></svg>
+    <svg class="hero-tri" width="35" height="35" viewBox="0 0 60 60"><path d="M30 5 L55 50 H5 Z" stroke="#7C9A8E" stroke-width="0.8" fill="none"/></svg>
+    <svg class="hero-tri" width="65" height="65" viewBox="0 0 60 60"><path d="M30 5 L55 50 H5 Z" stroke="#D4AF37" stroke-width="0.6" fill="none"/></svg>
+    <svg class="hero-tri" width="48" height="48" viewBox="0 0 60 60"><path d="M30 5 L55 50 H5 Z" stroke="#D4A89A" stroke-width="0.5" fill="none"/></svg>
+    <svg class="hero-tri" width="75" height="75" viewBox="0 0 60 60"><path d="M30 5 L55 50 H5 Z" stroke="#D4AF37" stroke-width="0.4" fill="none"/></svg>
+  </div>
+
+  <!-- Layer 1: Light sweep -->
+  <div class="hero-sweep"></div>
+
+  <!-- Layer 1b: Scan line -->
+  <div class="hero-scanline"></div>
+
+  <!-- Layer 0b: Product image atmosphere -->
+  <div class="hero-product-img">
+    <img src="https://ambir.com/wp-content/uploads/2025/05/ADF_Scanners_header.png" alt="" aria-hidden="true">
+  </div>
+
+  <!-- Layer 2: Dark overlay -->
+  <div class="hero-overlay"></div>
+
+  <!-- Layer 2b: Vignette -->
+  <div class="hero-vignette"></div>
+
+  <!-- Layer 3: Content -->
+  <div class="hero-content fade-in">
+    <div class="hero-monogram-wrap">
+      <svg class="hero-monogram" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M40 8 L70 65 H10 Z" stroke="#D4AF37" stroke-width="1.5" fill="none"/>
+        <line x1="20" y1="50" x2="60" y2="50" stroke="#D4AF37" stroke-width="1"/>
+      </svg>
+    </div>
+    <h1>Precision in<br><strong>Every Scan</strong></h1>
+    <hr class="hero-rule">
+    <p>Document capture solutions engineered for accuracy and trusted by the world's leading healthcare systems and enterprises.</p>
+    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+      <a href="#products" class="hero-cta">Explore Products</a>
+      <a href="#" class="hero-cta" style="background: transparent; border: 1.5px solid rgba(255,255,255,0.35);">Request a Demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== STAT BANNER ========== -->
+<section class="stat-banner">
+  <div class="stat-inner fade-in">
+    <div class="stat-item">
+      <div class="stat-number">75<span>%</span></div>
+      <div class="stat-label">Of Top 40 U.S. Healthcare Systems</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-number">5<span>x</span></div>
+      <div class="stat-label">Inc. 5000 Honoree</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-number">100<span>%</span></div>
+      <div class="stat-label">U.S.-Based Support</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TRUSTED-BY LOGO BAR ========== -->
+<section class="logo-bar">
+  <div class="logo-bar-label">Trusted by</div>
+  <div class="logo-bar-track">
+    <span>Quest Solutions</span>
+    <span>Compulink Software</span>
+    <span>Gray Construction</span>
+    <span>Verant ID Systems</span>
+    <span>Papyrus GMBH</span>
+    <span>Innsoft</span>
+    <span>DSS</span>
+    <span>New Wave Automation</span>
+    <span>Suzy Systems</span>
+    <span>Yakima Valley Farm Workers Clinic</span>
+    <span>MVi Contracts</span>
+    <!-- Duplicate for seamless loop -->
+    <span>Quest Solutions</span>
+    <span>Compulink Software</span>
+    <span>Gray Construction</span>
+    <span>Verant ID Systems</span>
+    <span>Papyrus GMBH</span>
+    <span>Innsoft</span>
+    <span>DSS</span>
+    <span>New Wave Automation</span>
+    <span>Suzy Systems</span>
+    <span>Yakima Valley Farm Workers Clinic</span>
+    <span>MVi Contracts</span>
+  </div>
+</section>
+
+<!-- ========== PRODUCTS ========== -->
+<section class="products section-pad" id="products">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="overline">Our Products</div>
+      <h2>Engineered for Every Workflow</h2>
+      <hr class="gold-rule">
+    </div>
+    <div class="products-grid">
+
+      <div class="product-card fade-in">
+        <div class="product-img">
+          <img src="https://ambir.com/wp-content/uploads/2025/03/DS820_DS830_Shopify_square-2048x2048-1-1536x1536.jpg" alt="Document Scanners" loading="lazy">
+        </div>
+        <div class="product-body">
+          <h3>Document Scanners</h3>
+          <p>High-speed scanning with precision optics for healthcare, finance, and enterprise environments.</p>
+          <a href="#" class="product-link">Learn More &rarr;</a>
+        </div>
+      </div>
+
+      <div class="product-card fade-in">
+        <div class="product-img">
+          <img src="https://ambir.com/wp-content/uploads/2024/02/DS690_Shopify_square-1536x1536.jpg" alt="Card Scanners" loading="lazy">
+        </div>
+        <div class="product-body">
+          <h3>Card Scanners</h3>
+          <p>ID and insurance card capture designed to streamline patient intake and identity verification.</p>
+          <a href="#" class="product-link">Learn More &rarr;</a>
+        </div>
+      </div>
+
+      <div class="product-card fade-in">
+        <div class="product-img">
+          <img src="https://ambir.com/wp-content/uploads/2025/05/BR300_shopify_1800x_BL_square-1024x1024.webp" alt="Barcode Scanners" loading="lazy">
+        </div>
+        <div class="product-body">
+          <h3>Barcode Scanners</h3>
+          <p>Rapid barcode reading for point-of-care workflows, inventory management, and logistics.</p>
+          <a href="#" class="product-link">Learn More &rarr;</a>
+        </div>
+      </div>
+
+      <div class="product-card fade-in">
+        <div class="product-img">
+          <img src="https://ambir.com/wp-content/uploads/2025/06/Mobile.Scanners_link-1536x1536.jpg" alt="Mobile Scanners" loading="lazy">
+        </div>
+        <div class="product-body">
+          <h3>Mobile Scanners</h3>
+          <p>Portable, battery-powered scanning for field work, remote offices, and on-the-go professionals.</p>
+          <a href="#" class="product-link">Learn More &rarr;</a>
+        </div>
+      </div>
+
+      <div class="product-card fade-in">
+        <div class="product-img">
+          <img src="https://ambir.com/wp-content/uploads/2025/06/Flex_AMBIR_2200x-1024x1024.jpg" alt="Document Camera & WebCam" loading="lazy">
+        </div>
+        <div class="product-body">
+          <h3>Document Cameras</h3>
+          <p>Versatile document cameras and webcams for presentations, remote collaboration, and archival.</p>
+          <a href="#" class="product-link">Learn More &rarr;</a>
+        </div>
+      </div>
+
+      <div class="product-card fade-in">
+        <div class="product-img">
+          <img src="https://ambir.com/wp-content/uploads/2024/06/SP110_shopify_2200x-1536x1536.png" alt="Signature Pads" loading="lazy">
+        </div>
+        <div class="product-body">
+          <h3>Signature Pads</h3>
+          <p>Secure electronic signature capture for consent forms, agreements, and clinical documentation.</p>
+          <a href="#" class="product-link">Learn More &rarr;</a>
+        </div>
+      </div>
+
+      <div class="product-card fade-in">
+        <div class="product-img">
+          <img src="https://ambir.com/wp-content/uploads/2025/05/LP400_shopify_2200x-1024x1024.png" alt="Thermal Label Printers" loading="lazy">
+        </div>
+        <div class="product-body">
+          <h3>Thermal Label Printers</h3>
+          <p>Fast, reliable label printing for patient wristbands, specimen labels, and shipping logistics.</p>
+          <a href="#" class="product-link">Learn More &rarr;</a>
+        </div>
+      </div>
+
+      <div class="product-card fade-in">
+        <div class="product-img">
+          <img src="https://ambir.com/wp-content/uploads/2025/03/DS1060_Shopify_square-2048x2048-1-1536x1536.jpg" alt="Passport Scanners" loading="lazy">
+        </div>
+        <div class="product-body">
+          <h3>Passport Scanners</h3>
+          <p>MRZ-reading passport and travel document scanners built for speed and compliance.</p>
+          <a href="#" class="product-link">Learn More &rarr;</a>
+        </div>
+      </div>
+
+      <div class="product-card fade-in">
+        <div class="product-img">
+          <img src="https://ambir.com/wp-content/uploads/2025/06/DS687_BCS_V2-1536x1536.jpg" alt="Business Card Scanners" loading="lazy">
+        </div>
+        <div class="product-body">
+          <h3>Business Card Scanners</h3>
+          <p>Quickly digitize contact information from business cards with precision OCR technology.</p>
+          <a href="#" class="product-link">Learn More &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========== INDUSTRY SOLUTIONS ========== -->
+<section class="industry section-pad" id="solutions">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="overline" style="color: var(--gold);">Industry Solutions</div>
+      <h2 style="color: #fff;">Tailored for Your Industry</h2>
+      <hr class="gold-rule">
+    </div>
+    <div class="industry-grid">
+      <div class="industry-card fade-in">
+        <div class="industry-content">
+          <div class="overline">Healthcare</div>
+          <h3>Built for Clinical Precision</h3>
+          <p>Seamlessly integrate document capture into EHR workflows, patient intake, and records management across your health system.</p>
+          <a href="#" class="industry-btn">Explore Healthcare Solutions</a>
+        </div>
+      </div>
+      <div class="industry-card fade-in">
+        <div class="industry-content">
+          <div class="overline">Financial Services</div>
+          <h3>Trusted by Institutions</h3>
+          <p>Secure, compliant document scanning for banking operations, account onboarding, and regulatory documentation.</p>
+          <a href="#" class="industry-btn">Explore Financial Solutions</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TRUST ========== -->
+<section class="trust section-pad-sm" id="about">
+  <div class="container">
+    <div class="trust-grid">
+      <div class="trust-item fade-in">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v5c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" stroke="#D4AF37" stroke-width="1.5"/></svg>
+        </div>
+        <h4>Precision</h4>
+        <p>Every scan, every capture — engineered for absolute accuracy in critical environments.</p>
+      </div>
+      <div class="trust-item fade-in">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="#D4AF37" stroke-width="1.5"/></svg>
+        </div>
+        <h4>Trust</h4>
+        <p>Relied upon by 75% of the top 40 U.S. healthcare systems for mission-critical workflows.</p>
+      </div>
+      <div class="trust-item fade-in">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#D4AF37" stroke-width="1.5"/><path d="M12 8v4l3 3" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <h4>Simplicity</h4>
+        <p>Complex technology made effortlessly intuitive, from setup to daily operation.</p>
+      </div>
+      <div class="trust-item fade-in">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3 6h6l-5 4 2 6-6-4-6 4 2-6-5-4h6l3-6z" stroke="#D4AF37" stroke-width="1.5"/></svg>
+        </div>
+        <h4>Excellence</h4>
+        <p>100% U.S.-based support, 5x Inc. 5000 honoree, and a relentless pursuit of quality.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TESTIMONIALS ========== -->
+<section class="testimonials section-pad">
+  <div class="container testimonials-inner">
+    <div class="section-header fade-in" style="text-align: center; margin-bottom: 48px;">
+      <div class="overline" style="color: var(--gold);">What Our Customers Say</div>
+      <h2 style="color: #fff;">Trusted Across Industries</h2>
+      <hr class="gold-rule" style="margin: 16px auto 0;">
+    </div>
+
+    <div class="testimonial-slide active" data-slide="0">
+      <div class="testimonial-stars">
+        <svg width="120" height="20" viewBox="0 0 120 20"><g fill="#D4AF37"><polygon points="10,0 13,7 20,7 14,12 16,19 10,15 4,19 6,12 0,7 7,7"/><polygon points="34,0 37,7 44,7 38,12 40,19 34,15 28,19 30,12 24,7 31,7"/><polygon points="58,0 61,7 68,7 62,12 64,19 58,15 52,19 54,12 48,7 55,7"/><polygon points="82,0 85,7 92,7 86,12 88,19 82,15 76,19 78,12 72,7 79,7"/><polygon points="106,0 109,7 116,7 110,12 112,19 106,15 100,19 102,12 96,7 103,7"/></g></svg>
+      </div>
+      <p class="testimonial-quote">There's a reason Ambir is the most popular scanner in VA. They just work.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">JB</div>
+        <div class="testimonial-info">
+          <h4>Justin Ballard</h4>
+          <p>DSS</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-slide" data-slide="1">
+      <div class="testimonial-stars">
+        <svg width="120" height="20" viewBox="0 0 120 20"><g fill="#D4AF37"><polygon points="10,0 13,7 20,7 14,12 16,19 10,15 4,19 6,12 0,7 7,7"/><polygon points="34,0 37,7 44,7 38,12 40,19 34,15 28,19 30,12 24,7 31,7"/><polygon points="58,0 61,7 68,7 62,12 64,19 58,15 52,19 54,12 48,7 55,7"/><polygon points="82,0 85,7 92,7 86,12 88,19 82,15 76,19 78,12 72,7 79,7"/><polygon points="106,0 109,7 116,7 110,12 112,19 106,15 100,19 102,12 96,7 103,7"/></g></svg>
+      </div>
+      <p class="testimonial-quote">We purchased 85 scanners from Ambir. They provided excellent customer service throughout the process.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">JP</div>
+        <div class="testimonial-info">
+          <h4>JP Richards</h4>
+          <p>Systems Analyst, Yakima Valley Farm Workers Clinic</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-slide" data-slide="2">
+      <div class="testimonial-stars">
+        <svg width="120" height="20" viewBox="0 0 120 20"><g fill="#D4AF37"><polygon points="10,0 13,7 20,7 14,12 16,19 10,15 4,19 6,12 0,7 7,7"/><polygon points="34,0 37,7 44,7 38,12 40,19 34,15 28,19 30,12 24,7 31,7"/><polygon points="58,0 61,7 68,7 62,12 64,19 58,15 52,19 54,12 48,7 55,7"/><polygon points="82,0 85,7 92,7 86,12 88,19 82,15 76,19 78,12 72,7 79,7"/><polygon points="106,0 109,7 116,7 110,12 112,19 106,15 100,19 102,12 96,7 103,7"/></g></svg>
+      </div>
+      <p class="testimonial-quote">You have an outstanding product that is already improving our workflow efficiency.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">ES</div>
+        <div class="testimonial-info">
+          <h4>Edward Sandler</h4>
+          <p>Practice Administrator, Barbara Anne Hessel MD PLLC</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-slide" data-slide="3">
+      <div class="testimonial-stars">
+        <svg width="120" height="20" viewBox="0 0 120 20"><g fill="#D4AF37"><polygon points="10,0 13,7 20,7 14,12 16,19 10,15 4,19 6,12 0,7 7,7"/><polygon points="34,0 37,7 44,7 38,12 40,19 34,15 28,19 30,12 24,7 31,7"/><polygon points="58,0 61,7 68,7 62,12 64,19 58,15 52,19 54,12 48,7 55,7"/><polygon points="82,0 85,7 92,7 86,12 88,19 82,15 76,19 78,12 72,7 79,7"/><polygon points="106,0 109,7 116,7 110,12 112,19 106,15 100,19 102,12 96,7 103,7"/></g></svg>
+      </div>
+      <p class="testimonial-quote">I have been associated with Ambir for over ten years. They are always A+ with the hardware and software. Support has always been second to none IF you need it.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">JC</div>
+        <div class="testimonial-info">
+          <h4>Jim Collins</h4>
+          <p>10+ Year AMBIR Customer</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-slide" data-slide="4">
+      <div class="testimonial-stars">
+        <svg width="120" height="20" viewBox="0 0 120 20"><g fill="#D4AF37"><polygon points="10,0 13,7 20,7 14,12 16,19 10,15 4,19 6,12 0,7 7,7"/><polygon points="34,0 37,7 44,7 38,12 40,19 34,15 28,19 30,12 24,7 31,7"/><polygon points="58,0 61,7 68,7 62,12 64,19 58,15 52,19 54,12 48,7 55,7"/><polygon points="82,0 85,7 92,7 86,12 88,19 82,15 76,19 78,12 72,7 79,7"/><polygon points="106,0 109,7 116,7 110,12 112,19 106,15 100,19 102,12 96,7 103,7"/></g></svg>
+      </div>
+      <p class="testimonial-quote">Ambir is extremely responsive to our needs and issues. They have gone above and beyond.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">EV</div>
+        <div class="testimonial-info">
+          <h4>Eileen Valliere</h4>
+          <p>Purchasing Manager, Valco</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-slide" data-slide="5">
+      <div class="testimonial-stars">
+        <svg width="120" height="20" viewBox="0 0 120 20"><g fill="#D4AF37"><polygon points="10,0 13,7 20,7 14,12 16,19 10,15 4,19 6,12 0,7 7,7"/><polygon points="34,0 37,7 44,7 38,12 40,19 34,15 28,19 30,12 24,7 31,7"/><polygon points="58,0 61,7 68,7 62,12 64,19 58,15 52,19 54,12 48,7 55,7"/><polygon points="82,0 85,7 92,7 86,12 88,19 82,15 76,19 78,12 72,7 79,7"/><polygon points="106,0 109,7 116,7 110,12 112,19 106,15 100,19 102,12 96,7 103,7"/></g></svg>
+      </div>
+      <p class="testimonial-quote">Ambir Technology has been a reliable provider. We highly recommend Ambir Technology.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">JB</div>
+        <div class="testimonial-info">
+          <h4>Jeff Black</h4>
+          <p>President &amp; CEO, Verant Identification Systems</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-dots">
+      <button class="testimonial-dot active" data-index="0" aria-label="Testimonial 1"></button>
+      <button class="testimonial-dot" data-index="1" aria-label="Testimonial 2"></button>
+      <button class="testimonial-dot" data-index="2" aria-label="Testimonial 3"></button>
+      <button class="testimonial-dot" data-index="3" aria-label="Testimonial 4"></button>
+      <button class="testimonial-dot" data-index="4" aria-label="Testimonial 5"></button>
+      <button class="testimonial-dot" data-index="5" aria-label="Testimonial 6"></button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== NEWS & EVENTS ========== -->
+<section class="insights section-pad" id="insights">
+  <div class="container">
+    <div class="section-header fade-in" style="text-align: center;">
+      <div class="overline">News &amp; Events</div>
+      <h2>Recent News &amp; Events from AMBIR</h2>
+      <hr class="gold-rule" style="margin: 16px auto 0;">
+    </div>
+    <div class="insights-grid">
+
+      <div class="insight-card fade-in">
+        <div class="insight-img-real">
+          <img src="https://ambir.com/wp-content/uploads/2026/03/Screenshot-2026-03-06-160428.png" alt="Nextech Edge 2026" loading="lazy">
+          <span class="insight-badge">News</span>
+        </div>
+        <div class="insight-body">
+          <h3>AMBIR to Showcase Products at Nextech Edge 2026</h3>
+          <p>Join us at this year's Nextech Edge conference to see our latest document capture innovations in action.</p>
+          <a href="#" class="product-link">Read More &rarr;</a>
+          <div class="insight-date">March 6, 2026</div>
+        </div>
+      </div>
+
+      <div class="insight-card fade-in">
+        <div class="insight-img-real">
+          <img src="https://ambir.com/wp-content/uploads/2026/02/LP230_Optometry-1.jpg" alt="Optometry Label Printers" loading="lazy">
+          <span class="insight-badge insight-badge--sage">Product</span>
+        </div>
+        <div class="insight-body">
+          <h3>Transform Optometry Office Efficiency with AMBIR Label Printers</h3>
+          <p>Discover how our thermal label printers are streamlining workflows in optometry practices nationwide.</p>
+          <a href="#" class="product-link">Read More &rarr;</a>
+          <div class="insight-date">February 5, 2026</div>
+        </div>
+      </div>
+
+      <div class="insight-card fade-in">
+        <div class="insight-img-real">
+          <img src="https://ambir.com/wp-content/uploads/2025/06/AMBIR_main_header_temp.jpg" alt="Zapier Integration" loading="lazy">
+          <span class="insight-badge">News</span>
+        </div>
+        <div class="insight-body">
+          <h3>AMBIR Launches Zapier Integration for AmbirScan Software</h3>
+          <p>Enabling seamless workflow automation — connect AmbirScan to thousands of apps with our new Zapier integration.</p>
+          <a href="#" class="product-link">Read More &rarr;</a>
+          <div class="insight-date">December 5, 2025</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========== NEWSLETTER ========== -->
+<section class="newsletter section-pad-sm">
+  <div class="container newsletter-inner fade-in">
+    <div class="newsletter-text">
+      <h2>Stay Informed</h2>
+      <p>Subscribe for product announcements, industry insights, and company news.</p>
+    </div>
+    <form class="newsletter-form" onsubmit="event.preventDefault();">
+      <input type="email" placeholder="Enter your email address" aria-label="Email">
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- ========== CTA BANNER ========== -->
+<section class="cta-banner section-pad">
+  <div class="container cta-banner-inner fade-in">
+    <h2>Ready to Transform Your Workflow?</h2>
+    <p>Join the 75% of top U.S. healthcare systems that trust AMBIR. Get a personalized recommendation for your organization.</p>
+    <div class="cta-banner-buttons">
+      <a href="#" class="cta-btn-primary">
+        <svg viewBox="0 0 20 20" width="18" height="18" fill="none"><path d="M3 5h14l-7 7L3 5z" fill="currentColor"/><rect x="3" y="5" width="14" height="10" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+        Request a Demo
+      </a>
+      <a href="#" class="cta-btn-secondary">
+        <svg viewBox="0 0 20 20" width="18" height="18" fill="none"><path d="M2 3a1 1 0 011-1h4l2 3H3a1 1 0 01-1-1V3z" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="5" width="16" height="12" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+        Download Line Card
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== STICKY CTA ========== -->
+<div class="sticky-cta" id="stickyCta">
+  <a href="#" class="sticky-cta-btn">
+    <svg viewBox="0 0 20 20" fill="none"><path d="M3 5h14l-7 7L3 5z" fill="currentColor"/><rect x="3" y="5" width="14" height="10" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+    Request a Demo
+  </a>
+  <a href="#" class="sticky-cta-phone">
+    <svg viewBox="0 0 20 20" fill="none"><path d="M2 3a2 2 0 012-2h2.5a1 1 0 01.95.68l1 3.2a1 1 0 01-.45 1.12L6.5 7.2a10 10 0 006.3 6.3L14 12a1 1 0 011.12-.45l3.2 1a1 1 0 01.68.95V16a2 2 0 01-2 2C8 18 2 12 2 3z" stroke="currentColor" stroke-width="1.5"/></svg>
+    Call Sales
+  </a>
+</div>
+
+<!-- ========== FOOTER ========== -->
+<footer class="footer section-pad-sm">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <svg width="24" height="24" viewBox="0 0 60 60" fill="none">
+            <path d="M30 8 L52 48 H8 Z" stroke="#D4AF37" stroke-width="1.5" fill="none"/>
+            <line x1="18" y1="38" x2="42" y2="38" stroke="#D4AF37" stroke-width="1"/>
+          </svg>
+          AMBIR
+        </div>
+        <p>Empowering organizations to capture, digitize, and manage their most critical documents with precision and elegance.</p>
+        <div class="footer-badges">
+          <div class="badge">
+            <svg viewBox="0 0 14 14" fill="none"><path d="M7 1l2 4h4l-3 3 1 4-4-2.5L3 12l1-4-3-3h4l2-4z" stroke="#D4AF37" stroke-width="1"/></svg>
+            5x Inc. 5000
+          </div>
+          <div class="badge">
+            <svg viewBox="0 0 14 14" fill="none"><path d="M7 1L2 4v3.5c0 3.5 2.1 6.7 5 7.5 2.9-.8 5-4 5-7.5V4L7 1z" stroke="#D4AF37" stroke-width="1"/></svg>
+            U.S. Support
+          </div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Driver Downloads</a></li>
+          <li><a href="#">Knowledge Base</a></li>
+          <li><a href="#">Warranty Info</a></li>
+          <li><a href="#">Returns</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 id="support">Resources</h4>
+        <ul>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Case Studies</a></li>
+          <li><a href="#">Product Guides</a></li>
+          <li><a href="#">Partner Program</a></li>
+          <li><a href="#">Where to Buy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="#">Document Scanners</a></li>
+          <li><a href="#">Card Scanners</a></li>
+          <li><a href="#">Barcode Scanners</a></li>
+          <li><a href="#">Signature Pads</a></li>
+          <li><a href="#">Label Printers</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">&copy; 2026 Ambir Technology, Inc. All rights reserved.</div>
+      <div class="footer-socials">
+        <a href="#" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+        </a>
+        <a href="#" aria-label="YouTube">
+          <svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6a3 3 0 00-2.1 2.1C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 002.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 002.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.5 15.6V8.4l6.3 3.6z"/></svg>
+        </a>
+        <a href="#" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M24 12c0-6.63-5.37-12-12-12S0 5.37 0 12c0 5.99 4.39 10.95 10.13 11.85V15.47H7.08V12h3.05V9.36c0-3.01 1.79-4.67 4.53-4.67 1.31 0 2.68.23 2.68.23v2.95h-1.51c-1.49 0-1.95.92-1.95 1.87V12h3.33l-.53 3.47h-2.8v8.38C19.61 22.95 24 17.99 24 12z"/></svg>
+        </a>
+      </div>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Custom triangle cursor elements -->
+<div class="cursor-tri" id="cursorDot">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M12 2 L22 20 H2 Z" stroke="#D4AF37" stroke-width="1.8" fill="rgba(212,175,55,0.15)"/></svg>
+</div>
+<div class="cursor-ring" id="cursorRing">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M12 2 L22 20 H2 Z" stroke="rgba(212,175,55,0.35)" stroke-width="0.8" fill="none"/></svg>
+</div>
+
+<!-- ========== SCRIPTS ========== -->
+<script>
+(() => {
+  // ===== MOBILE NAV =====
+  document.getElementById('navToggle').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+
+  // ===== FADE-IN ON SCROLL =====
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+
+  // ===== SMOOTH SCROLL =====
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.getElementById('navLinks').classList.remove('open');
+      }
+    });
+  });
+
+  // ===== CUSTOM CURSOR =====
+  const dot = document.getElementById('cursorDot');
+  const ring = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+  // Only enable on non-touch devices
+  if (window.matchMedia('(pointer: fine)').matches) {
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      dot.style.left = mouseX + 'px';
+      dot.style.top = mouseY + 'px';
+    });
+
+    // Smooth trailing triangle with rotation
+    let angle = 0;
+    function animateRing() {
+      ringX += (mouseX - ringX) * 0.12;
+      ringY += (mouseY - ringY) * 0.12;
+      // Slow continuous rotation on the trailing triangle
+      angle += 0.3;
+      ring.style.left = ringX + 'px';
+      ring.style.top = ringY + 'px';
+      ring.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    // Hover state for interactive elements
+    const hoverTargets = document.querySelectorAll('a, button, .product-card, .insight-card, .industry-card, .trust-item, input');
+    hoverTargets.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        dot.classList.add('hovering');
+        ring.classList.add('hovering');
+      });
+      el.addEventListener('mouseleave', () => {
+        dot.classList.remove('hovering');
+        ring.classList.remove('hovering');
+      });
+    });
+
+    // Click state
+    document.addEventListener('mousedown', () => {
+      dot.classList.add('clicking');
+      ring.classList.add('clicking');
+    });
+    document.addEventListener('mouseup', () => {
+      dot.classList.remove('clicking');
+      ring.classList.remove('clicking');
+    });
+  } else {
+    dot.style.display = 'none';
+    ring.style.display = 'none';
+  }
+
+  // ===== 3D TILT CARDS =====
+  const tiltCards = document.querySelectorAll('.product-card, .insight-card');
+  tiltCards.forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = ((y - centerY) / centerY) * -6;
+      const rotateY = ((x - centerX) / centerX) * 6;
+      card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateY(0)';
+      card.style.transition = 'transform 0.5s ease';
+    });
+    card.addEventListener('mouseenter', () => {
+      card.style.transition = 'transform 0.1s ease';
+    });
+  });
+
+  // ===== MAGNETIC BUTTONS =====
+  const magneticBtns = document.querySelectorAll('.hero-cta, .industry-btn, .nav-cta, .newsletter-form button');
+  magneticBtns.forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = 'translate(0, 0)';
+      btn.style.transition = 'transform 0.4s ease';
+    });
+    btn.addEventListener('mouseenter', () => {
+      btn.style.transition = 'transform 0.1s ease';
+    });
+  });
+
+  // ===== ANIMATED STAT COUNTER =====
+  const statNumbers = document.querySelectorAll('.stat-number');
+  let statsCounted = false;
+
+  function animateCounters() {
+    statNumbers.forEach(el => {
+      const text = el.textContent;
+      const match = text.match(/(\d+)/);
+      if (!match) return;
+      const target = parseInt(match[1]);
+      const suffix = text.replace(match[1], '');
+      const duration = 2000;
+      const start = performance.now();
+
+      function update(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(target * eased);
+        el.innerHTML = current + '<span>' + suffix.replace(/\d/g, '') + '</span>';
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      // Reset to 0 first
+      el.innerHTML = '0<span>' + suffix.replace(/\d/g, '') + '</span>';
+      requestAnimationFrame(update);
+    });
+  }
+
+  const statObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !statsCounted) {
+        statsCounted = true;
+        animateCounters();
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stat-banner').forEach(el => statObserver.observe(el));
+
+  // ===== PARALLAX ON SCROLL =====
+  const heroImg = document.querySelector('.hero-product-img');
+  const heroTriangles = document.querySelector('.hero-triangles');
+
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+
+    // Hero parallax layers
+    if (heroImg && scrollY < window.innerHeight) {
+      heroImg.style.transform = `scale(${1 + scrollY * 0.0001}) translateY(${scrollY * 0.15}px)`;
+    }
+    if (heroTriangles && scrollY < window.innerHeight) {
+      heroTriangles.style.transform = `translateY(${scrollY * 0.08}px)`;
+    }
+
+    // Nav shrink on scroll
+    const nav = document.querySelector('.nav');
+    if (scrollY > 80) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }, { passive: true });
+
+  // ===== GOLD RULE GROW ON SCROLL =====
+  const goldRules = document.querySelectorAll('.gold-rule');
+  const ruleObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.width = '48px';
+        entry.target.style.transition = 'width 0.8s ease';
+      } else {
+        entry.target.style.width = '0px';
+      }
+    });
+  }, { threshold: 0.5 });
+  goldRules.forEach(r => {
+    r.style.width = '0px';
+    ruleObserver.observe(r);
+  });
+
+  // ===== TRUST ICONS — SPIN ON HOVER =====
+  document.querySelectorAll('.trust-item').forEach(item => {
+    const icon = item.querySelector('.trust-icon');
+    item.addEventListener('mouseenter', () => {
+      icon.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+    });
+  });
+
+  // ===== RIPPLE EFFECT ON BUTTONS =====
+  document.querySelectorAll('.hero-cta, .industry-btn, .nav-cta, .newsletter-form button, .product-link').forEach(btn => {
+    btn.style.position = 'relative';
+    btn.style.overflow = 'hidden';
+    btn.addEventListener('click', function(e) {
+      const ripple = document.createElement('span');
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      ripple.style.cssText = `
+        position: absolute; border-radius: 50%; pointer-events: none;
+        width: ${size}px; height: ${size}px;
+        left: ${e.clientX - rect.left - size/2}px;
+        top: ${e.clientY - rect.top - size/2}px;
+        background: rgba(255,255,255,0.25);
+        transform: scale(0); opacity: 1;
+        animation: rippleOut 0.6s ease forwards;
+      `;
+      this.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+    });
+  });
+
+  // Ripple keyframes injected
+  const rippleStyle = document.createElement('style');
+  rippleStyle.textContent = `@keyframes rippleOut { to { transform: scale(2.5); opacity: 0; } }`;
+  document.head.appendChild(rippleStyle);
+
+  // ===== TESTIMONIAL CAROUSEL =====
+  const slides = document.querySelectorAll('.testimonial-slide');
+  const dots = document.querySelectorAll('.testimonial-dot');
+  let currentSlide = 0;
+  let autoPlay;
+
+  function showSlide(index) {
+    slides.forEach(s => s.classList.remove('active'));
+    dots.forEach(d => d.classList.remove('active'));
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+    currentSlide = index;
+  }
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      showSlide(parseInt(dot.dataset.index));
+      clearInterval(autoPlay);
+      startAutoPlay();
+    });
+  });
+
+  function startAutoPlay() {
+    autoPlay = setInterval(() => {
+      showSlide((currentSlide + 1) % slides.length);
+    }, 5000);
+  }
+  if (slides.length > 0) startAutoPlay();
+
+  // ===== STICKY CTA (show after scrolling past hero) =====
+  const stickyCta = document.getElementById('stickyCta');
+  const stickyObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) {
+        stickyCta.classList.add('visible');
+      } else {
+        stickyCta.classList.remove('visible');
+      }
+    });
+  }, { threshold: 0 });
+  const heroSection = document.querySelector('.hero');
+  if (heroSection && stickyCta) stickyObserver.observe(heroSection);
+
+  // ===== STAGGERED CARD REVEALS =====
+  document.querySelectorAll('.products-grid, .insights-grid, .trust-grid').forEach(grid => {
+    const cards = grid.children;
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          Array.from(cards).forEach((card, i) => {
+            setTimeout(() => {
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            }, i * 100);
+          });
+          cardObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    Array.from(cards).forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(30px)';
+      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    });
+    cardObserver.observe(grid);
+  });
+
+})();
+</script>
+
+</body>
+</html>
