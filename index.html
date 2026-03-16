@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AMBIR — Precision in Every Detail</title>
+<meta name="description" content="AMBIR Technology — Professional-grade document scanners, signature pads, and imaging solutions. Precision in every detail.">
+<meta property="og:title" content="AMBIR — Precision in Every Detail">
+<meta property="og:description" content="Professional-grade document scanners, signature pads, and imaging solutions.">
+<meta property="og:image" content="ambir-thumbnail.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AMBIR — Precision in Every Detail">
+<meta name="twitter:image" content="ambir-thumbnail.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 /* ========== RESET & BASE ========== */
@@ -639,6 +647,65 @@ button { cursor: pointer; font-family: inherit; border: none; }
 }
 .sticky-cta-phone:hover { color: #fff; background: var(--slate); }
 .sticky-cta-phone svg { width: 14px; height: 14px; }
+
+/* ========== WHERE TO BUY ========== */
+.where-to-buy { background: var(--ivory); }
+.retailers-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  margin-top: 40px;
+}
+.retailer {
+  background: #fff; border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.06);
+  padding: 24px 16px; text-align: center;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 80px;
+  font-size: 16px; font-weight: 700; color: var(--graphite);
+  letter-spacing: 0.02em;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.retailer:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(11,15,26,0.06);
+  border-color: var(--gold);
+}
+.retailer span { opacity: 0.7; transition: opacity 0.3s ease; }
+.retailer:hover span { opacity: 1; }
+@media (max-width: 968px) { .retailers-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 640px) { .retailers-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* ========== OUR BRANDS ========== */
+.our-brands { background: var(--obsidian); }
+.brands-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+  margin-top: 48px;
+}
+.brand-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px; padding: 40px 32px; text-align: center;
+  transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+.brand-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+  background: rgba(255,255,255,0.07);
+}
+.brand-name {
+  font-size: 28px; font-weight: 700; letter-spacing: 0.15em;
+  margin-bottom: 16px;
+}
+.brand-card:nth-child(1) .brand-name { color: #fff; }
+.brand-card:nth-child(2) .brand-name { color: var(--sage); }
+.brand-card:nth-child(3) .brand-name { color: var(--blush); }
+.brand-card p { font-size: 14px; color: var(--graphite); line-height: 1.7; }
+.brand-tag {
+  display: inline-block; margin-top: 20px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--gold); border: 1px solid rgba(212,175,55,0.3);
+  padding: 6px 16px; border-radius: 20px;
+}
+@media (max-width: 768px) { .brands-grid { grid-template-columns: 1fr; } }
 
 /* ========== CTA BANNER (above footer) ========== */
 .cta-banner {
@@ -1293,6 +1360,60 @@ button { cursor: pointer; font-family: inherit; border: none; }
         </div>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- ========== WHERE TO BUY ========== -->
+<section class="where-to-buy section-pad">
+  <div class="container">
+    <div class="section-header fade-in" style="text-align: center;">
+      <div class="overline">Availability</div>
+      <h2>Where to Buy AMBIR Products</h2>
+      <hr class="gold-rule" style="margin: 16px auto 0;">
+    </div>
+    <div class="retailers-grid">
+      <a href="#" class="retailer fade-in"><span>AMBIR Online Store</span></a>
+      <a href="#" class="retailer fade-in"><span>Amazon.com</span></a>
+      <a href="#" class="retailer fade-in"><span>CDW</span></a>
+      <a href="#" class="retailer fade-in"><span>Walmart</span></a>
+      <a href="#" class="retailer fade-in"><span>Staples</span></a>
+      <a href="#" class="retailer fade-in"><span>Ingram Micro</span></a>
+      <a href="#" class="retailer fade-in"><span>Office Depot / OfficeMax</span></a>
+      <a href="#" class="retailer fade-in"><span>Connection</span></a>
+      <a href="#" class="retailer fade-in"><span>SHI</span></a>
+      <a href="#" class="retailer fade-in"><span>Zones</span></a>
+      <a href="#" class="retailer fade-in"><span>TD SYNNEX</span></a>
+      <a href="#" class="retailer fade-in"><span>Insight</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== OUR BRANDS ========== -->
+<section class="our-brands section-pad">
+  <div class="container">
+    <div class="section-header fade-in" style="text-align: center;">
+      <div class="overline" style="color: var(--gold);">Our Portfolio</div>
+      <h2 style="color: #fff;">Three Brands, One Standard of Excellence</h2>
+      <hr class="gold-rule" style="margin: 16px auto 0;">
+    </div>
+    <p class="fade-in" style="text-align: center; color: var(--graphite); max-width: 700px; margin: 20px auto 0; font-size: 15px; line-height: 1.7;">AMBIR maintains three core brands. Each brings a unique blend of products together to meet the needs of business and consumers alike — all backed by U.S.-based support.</p>
+    <div class="brands-grid">
+      <div class="brand-card fade-in">
+        <div class="brand-name">A M B I R</div>
+        <p>Enterprise-grade document scanners, card scanners, and barcode readers trusted by healthcare systems and financial institutions worldwide.</p>
+        <span class="brand-tag">Enterprise &amp; Healthcare</span>
+      </div>
+      <div class="brand-card fade-in">
+        <div class="brand-name">PictureStudio</div>
+        <p>Consumer-focused photo and document scanning solutions designed for home offices, families, and creative professionals.</p>
+        <span class="brand-tag">Consumer &amp; Creative</span>
+      </div>
+      <div class="brand-card fade-in">
+        <div class="brand-name">DocketPORT</div>
+        <p>Compact, affordable scanners purpose-built for small business workflows, tax preparation, and professional services.</p>
+        <span class="brand-tag">Small Business</span>
+      </div>
     </div>
   </div>
 </section>
