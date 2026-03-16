@@ -806,15 +806,29 @@ button { cursor: pointer; font-family: inherit; border: none; }
   .products-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 640px) {
+  .hero { min-height: 90vh; }
+  .hero-product-img { display: none; }
+  .hero-overlay { background: rgba(11,15,26,0.3); }
+  .hero-content { padding: 0 20px; }
+  .hero h1 { font-size: 32px; }
+  .hero p { font-size: 16px; }
+  .hero-cta { padding: 14px 28px; font-size: 14px; }
   .stat-inner { flex-direction: column; gap: 32px; }
   .stat-divider { width: 48px; height: 1px; }
+  .stat-number { font-size: 36px; }
   .products-grid { grid-template-columns: 1fr; }
   .trust-grid { grid-template-columns: 1fr; }
+  .industry-card { min-height: 300px; padding: 28px; }
+  .industry-content h3 { font-size: 22px; }
   .newsletter-inner { flex-direction: column; text-align: center; }
   .newsletter-form { width: 100%; }
   .newsletter-form input { width: 100%; }
   .footer-top { grid-template-columns: 1fr; }
   .footer-bottom { flex-direction: column; text-align: center; }
+  .sticky-cta { bottom: 16px; right: 16px; }
+  .sticky-cta-btn { padding: 12px 20px; font-size: 13px; }
+  .cta-banner h2 { font-size: 24px; }
+  .cta-btn-primary, .cta-btn-secondary { padding: 14px 28px; font-size: 14px; width: 100%; justify-content: center; }
 }
 </style>
 </head>
